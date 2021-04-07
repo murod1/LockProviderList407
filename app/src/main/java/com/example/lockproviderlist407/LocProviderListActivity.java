@@ -31,4 +31,5 @@ public class LocProviderListActivity extends AppCompatActivity {
         }
         mTextView.setText(s);
     }
+    )};
 }
