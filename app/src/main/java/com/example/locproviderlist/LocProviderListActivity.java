@@ -10,34 +10,46 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class LocProviderListActivity extends AppCompatActivity implements View.OnClickListener{
-    TextView mTextView;
-    Button mButton;
-    LocationManager locMgr;
+public class LocProviderListActivity extends AppCompatActivity {
+    TextView mtextview;
+    Button mbutton;
+    LocationManager locmgr;
     List<String> locProviders;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.loc_provider_list);
 
-        mTextView = findViewById(R.id.txtOutput);
-        mButton = findViewById(R.id.button);
+        mtextview = findViewById(R.id.txtOutput);
+        mbutton = findViewById(R.id.button);
+        locmgr = (LocationManager)getSystemService(LOCATION_SERVICE);
 
-        mButton.setOnClickListener(this);
-    }
+        locProviders = locmgr.getAllProviders();
 
-    @Override
-    public void onClick(View view) {
-        locMgr = (LocationManager) getSystemService(LOCATION_SERVICE);
-        locProviders = locMgr.getAllProviders();
 
-        String s = "";
+        mbutton.setOnClickListener(new View.OnClickListener() {
+            String s = "";
+            @Override
+            public void onClick(View v) {
 
-        for(String provider: locProviders){
-            s += "Loc. Provider: " + provider + "\n" +
-                    "Status: " + locMgr.isProviderEnabled(provider) + "\n\n";
-        }
-        mTextView.setText(s);
+
+            for( String a: locProviders) {
+                int i=0;
+                s += "Loc.Provider " + locProviders.get(i) + "\n"
+                        + "status : " + locmgr.isProviderEnabled(locProviders.get(i)) + "\n\n";
+                i++;
+                mtextview.setText(s);
+            }
+
+            /*for (int i = 0; i < locProviders.size(); i++) {
+                s += "Loc.Provider " + locProviders.get(i) + "\n"
+                        + "status : " + locmgr.isProviderEnabled(locProviders.get(i)) + "\n\n";
+
+            } */
+
+            }
+        });
+
+
     }
 }
