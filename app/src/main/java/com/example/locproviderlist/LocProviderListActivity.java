@@ -10,39 +10,34 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class LocProviderListActivity extends AppCompatActivity {
-    TextView mtextview;
-    Button mbutton;
-    LocationManager locmgr;
+public class LocProviderListActivity extends AppCompatActivity implements View.OnClickListener{
+    TextView mTextView;
+    Button mButton;
+    LocationManager locMgr;
     List<String> locProviders;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.loc_provider_list);
+        setContentView(R.layout.activity_main);
 
-        mtextview = findViewById(R.id.txtOutput);
-        mbutton = findViewById(R.id.button);
-        locmgr = (LocationManager)getSystemService(LOCATION_SERVICE);
+        mTextView = findViewById(R.id.txtOutput);
+        mButton = findViewById(R.id.button);
 
-        locProviders = locmgr.getAllProviders();
+        mButton.setOnClickListener(this);
+    }
 
+    @Override
+    public void onClick(View view) {
+        locMgr = (LocationManager) getSystemService(LOCATION_SERVICE);
+        locProviders = locMgr.getAllProviders();
 
-        mbutton.setOnClickListener(new View.OnClickListener() {
-            String s = "";
-            @Override
-            public void onClick(View v) {
+        String s = "";
 
-
-
-                for(int i =0; i<locProviders.size();i++){
-                    s+= "Loc.Provider " + locProviders.get(i) + "\n"
-                            +"status : " + locmgr.isProviderEnabled(locProviders.get(i)) +"\n\n";
-                    mtextview.setText(s);
-                }
-
-            }
-        });
-
-
+        for(String provider: locProviders){
+            s += "Loc. Provider: " + provider + "\n" +
+                    "Status: " + locMgr.isProviderEnabled(provider) + "\n\n";
+        }
+        mTextView.setText(s);
     }
 }
