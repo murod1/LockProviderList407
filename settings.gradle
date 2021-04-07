@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name = "LockProviderList407"
+rootProject.name = "LocProviderList"
